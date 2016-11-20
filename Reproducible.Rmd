@@ -1,0 +1,57 @@
+---
+title: "Shiny Application and Reproducible Pitch"
+author: "Satya Pechetty"
+date: "November 19, 2016"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Shiny Application
+Summary
+
+The sample shiny application uses slider generated from random numbers and Widgets included textbox, radiobutton,  checkboxgroup and text to receive from users and provide results to users. 
+
+
+## The ui.R file
+
+It uses the fluidPage layout.
+Then, to ensure all the information is not crammed onto one page, the tabsetPanel has been used to effectively put multiple pages all on one page.
+Radio buttons have been used instead of a select menu. This means the user can change their choices even quicker than with select boxes.
+
+
+```{r Radio1, echo=FALSE ,message=FALSE}
+ library(shiny)
+```
+
+## Slide with R Output
+```{r Radio11, echo=TRUE ,message=FALSE}
+ if (interactive()) {
+
+ui <- fluidPage(
+  sliderInput("obs", "Number of observations:",
+    min = 0, max = 1000, value = 500
+  ),
+  plotOutput("distPlot")
+)
+
+# Server logic
+server <- function(input, output) {
+  output$distPlot <- renderPlot({
+    hist(rnorm(input$obs))
+  })
+}
+
+# Complete app with UI and server components
+shinyApp(ui, server)
+}
+```
+
+## Slide with R Output
+
+The server.R file
+Makes use of the renderDataTable function. This means that the results can be stored in server.R as a data frame for easy R calculation.
+
+
